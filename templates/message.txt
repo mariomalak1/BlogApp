@@ -1,0 +1,12 @@
+{#          {% with messeages = get_flashed_messages(with_categories = true) %}
+              {% if messeages %}
+                  {% for gategory,message  in messeages %}
+                      <div class = "alert alert-{{ gategory }}">
+                        {{ message }}
+                      </div>
+                  {% endfor %}
+              {% endif %}
+          {% endwith %}
+          {% block body %}
+          {% endblock %}
+#}
