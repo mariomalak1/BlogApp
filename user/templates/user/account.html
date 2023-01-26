@@ -1,20 +1,20 @@
 {% extends 'base.html' %}
-{% block body %}
+{% block content %}
     <div class="container">
         <div class = "content-section">
         <br>
             <div class = "media">
                 <img alt = "account image"  class="rounded-circle account-img" src = "{{ img }}">
                 <div class="media-body">
-                    <h2 class="account-heading">{{ current_user.username }}</h2>
-                    <p class="text-secondary">{{ current_user.email }}</p>
-                    <a class="btn btn-outline-info pr-2 pl-2" href="{{ url_for("users.change_password", user_id = current_user.id) }}"> Change Password </a>
+                    <h2 class="account-heading">{{ user.username }}</h2>
+                    <p class="text-secondary">{{ user.email }}</p>
+                    <a class="btn btn-outline-info pr-2 pl-2" href=""> Change Password </a>
                 </div>
             </div>
             <!-- form to the current user to edit his account information -->
             <div class="container">
                 <form method="post" action="" novalidate enctype="multipart/form-data">
-                    {{ form.hidden_tag() }}
+                    {% csrf_token %}
                   <div class="form-group">
                     <legend class="border-bottom mb-4">Account Info</legend>
                       {{ form.username.label(class = "exampleInputEmail1") }}
