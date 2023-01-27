@@ -8,3 +8,5 @@ static/profilePic
 .idea/modules.xml
 .idea/vcs.xml
 blog/static/
+migrations
+__pycache__

@@ -37,6 +37,7 @@
 
             <div class="navbar-nav">
                 {% if user.is_authenticated %}
+                    <a class="nav-item nav-link" href = "{% url "account-view" %}">Profile</a>
                     <a class="nav-item nav-link" href = "{% url "logout" %}">logout</a>
                 {% else %}
                     <a class="nav-item nav-link" href = "{% url "login" %}">Login</a>
