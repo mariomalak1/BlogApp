@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+    {% for post in posts %}
+        <div class="container">
+            <article class="media content-section">
+                <div class="media-body">
+                    <div class="article-metadata">
+                        {% if user == post.author %}
+                            <a class="mr-2" href="{% url "account-view" %}">{{ post.author.username }} </a>
+                        {% else %}
+                            <a class="mr-2" href="{% url "account-another" post.author.id %}">{{ post.author.username }} </a>
+                        {% endif %}
+
+                        {% if post.author.is_staff %}
+                            <small class="text-muted">admin</small>
+                        {% endif %}
+                        {% if user == post.author %}
+                            <h2><a class="article-title" href="{%  url 'PostUpdate' post.id %}">{{ post.title }} </a> </h2>
+                        {% else %}
+                            <h2><a class="article-title" href="{%  url 'postDetail' post.id %}">{{ post.title }} </a> </h2>
+                        {% endif %}
+                        <p class="article-content"> {{ post.content }} </p>
+                    </div>
+                </div>
+            </article>
+        </div>
+    {% endfor %}
+{% endblock %}

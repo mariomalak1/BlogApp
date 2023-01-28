@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load crispy_forms_filters %}
 {% block content %}
     <div class="container">
         <div class = "content-section">
@@ -11,22 +12,50 @@
                     <a class="btn btn-outline-info pr-2 pl-2" href="#"> Change Password </a>
                 </div>
             </div>
+
             <!-- form to the current user to edit his account information -->
-            <div class="container">
-                <form method="post" action="" novalidate enctype="multipart/form-data">
-                  <div class="form-group">
-                    <legend class="border-bottom mb-4">Account Info</legend>
-                      {{ user.email }}
-                  </div>
-                    <div class="form-group">
-                    </div>
-                    <div class="form-group">
-                        <input type="submit" value="remove image" name ="action1" class="btn btn-secondary">
-                    </div>
-                    <br>
-                <br>
-                </form>
-            </div>
+        <form method="post" action="" novalidate enctype="multipart/form-data">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Profile Info</legend>
+                    {{ userForm|crispy }}
+                    {{ profileForm|crispy }}
+                <div class = "form-group">
+                    <button class = "btn btn-outline-primary" type="submit">Update</button>
+                </div>
+            </fieldset>
+        </form>
         </div>
     </div>
+
+    {% if posts %}
+    <div class="container">
+        <div class="content-section">
+        <h3 class="text-muted navbar-header">
+            Posts of {{ posts.first.author }}
+        </h3>
+        {% for post in posts %}
+            <div class="container">
+                <article class="media content-section">
+                    <div class="media-body">
+                        <div class="article-metadata">
+                            <small class="text-muted"></small>
+                            <h2><a class="article-title" href="">{{ post.title }} </a> </h2>
+                            <p class="article-content"> {{ post.content }} </p>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+    {% else %}
+        <div class="container">
+            <div class="content-section">
+                <h3 class="text-muted navbar-header">Not Have Posts Yet</h3>
+                <br>
+                <a class="btn btn-outline-secondary" href="{% url "createPost" %}">Creat Post</a>
+            </div>
+        </div>
+    {% endif %}
 {% endblock %}
