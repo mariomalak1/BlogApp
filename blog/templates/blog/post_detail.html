@@ -9,9 +9,15 @@
                     {% else %}
                         <a class="mr-2" href="">{{ post.author.username }} </a>
                     {% endif %}
-                    <small class="text-muted"></small>
+
                     <h2><a class="article-title" href="">{{ post.title }} </a> </h2>
                     <p class="article-content"> {{ post.content }} </p>
+
+                    {% if user == post.author %}
+                        <a class="btn btn-primary m-2" href="{% url "PostUpdate" object.id %}">Edit</a>
+                        <a class="btn btn-danger m-2" href="{% url "PostDelete" object.id %}">Delete</a>
+                    {% endif %}
+
                 </div>
             </div>
         </article>

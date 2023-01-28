@@ -9,4 +9,3 @@ static/media
 .idea/vcs.xml
 blog/static/
 migrations
-__pycache__

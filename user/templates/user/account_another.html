@@ -17,12 +17,10 @@
     {% if posts %}
     <div class="container">
         <div class = "content-section">
-            <h2> Posts </h2>
+            <h2> Posts of {{ user_.username }} ({{ page_obj.paginator.count }})</h2>
             {% for post in posts %}
                  <div class="content-section">
-                    <h5> <a class="article-title" href="">{{ post.title }}</a></h5>
-                     <small class="text-muted"></small>
-                    <p> {{ post.content }} </p>
+                    <h5> <a class="article-title" href="{% url "postDetail" post.id %}">{{ post.title }}</a></h5>
                  </div>
             {% endfor %}
         </div>
@@ -34,5 +32,7 @@
             </div>
         </div>
     {% endif %}
+
+    {% include "pagination_include.html" %}
 
 {% endblock %}

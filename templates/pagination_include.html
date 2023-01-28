@@ -1,0 +1,24 @@
+{#    pagination logic    #}
+{% if is_paginated or page_obj.has_other_pages%}
+    {% if page_obj.has_previous %}
+        <a class="btn btn-outline-info mb-4" href= "?page=1">First</a>
+        <a class="btn btn-outline-info mb-4" href= "?page={{ page_obj.previous_page_number }}">Perivous</a>
+    {% endif %}
+
+
+    {#   to loop throw all numbers between the first and the second    #}
+    {% for page_num in page_obj.paginator.page_range %}
+        {% if page_obj.number == page_num %}
+            <a class="btn btn-info mb-4 active" href="?page={{ page_num }}">{{ page_num }}</a>
+        {% elif page_num > page_obj.number|add:'-2' and page_num < page_obj.number|add:'2' %}
+            <a class="btn btn-outline-info mb-4" href="?page={{ page_num }}">{{ page_num }}</a>
+{#            {% else %}#}
+{#                <a class="btn btn-outline-info mb-4" href="?page={{ page_num }}">{{ page_num }}</a>#}
+        {% endif %}
+    {% endfor %}
+
+    {% if page_obj.has_next %}
+        <a class="btn btn-outline-info mb-4" href= "?page={{ page_obj.next_page_number }}">Next</a>
+        <a class="btn btn-outline-info mb-4" href= "?page={{ paginator.num_pages }}">Last</a>
+    {% endif %}
+{% endif %}

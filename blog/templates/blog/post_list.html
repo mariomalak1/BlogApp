@@ -14,15 +14,15 @@
                         {% if post.author.is_staff %}
                             <small class="text-muted">admin</small>
                         {% endif %}
-                        {% if user == post.author %}
-                            <h2><a class="article-title" href="{%  url 'PostUpdate' post.id %}">{{ post.title }} </a> </h2>
-                        {% else %}
                             <h2><a class="article-title" href="{%  url 'postDetail' post.id %}">{{ post.title }} </a> </h2>
-                        {% endif %}
                         <p class="article-content"> {{ post.content }} </p>
                     </div>
                 </div>
             </article>
         </div>
+
     {% endfor %}
+
+    {% include "pagination_include.html" %}
+
 {% endblock %}

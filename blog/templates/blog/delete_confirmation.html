@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="container">
+        <article class="media content-section">
+            <div class="media-body">
+                <div class="article-metadata">
+                    <form method="post" action="" novalidate>
+                        {% csrf_token %}
+                        <h2 class="article-title"> Are You Sure That You Want To Delete Post With Title "{{ object.title }}" ?</h2>
+                        <a class="btn btn-secondary m-2" href="{% url "postDetail" object.id %}">Cancel</a>
+                        <button class="btn btn-danger m-2" type="submit">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </article>
+    </div>
+{% endblock %}

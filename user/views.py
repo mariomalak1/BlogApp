@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from blog import models as blog_Models
 from .models import Profile
 from django.contrib.auth import login as loginTheUser
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 # Create your views here.
 
 def register(request):
@@ -25,7 +26,18 @@ def register(request):
 
 @login_required
 def accountView(request):
-    posts = blog_Models.Post.objects.filter(author__id = request.user.id)
+    all_post = blog_Models.Post.objects.filter(author__id=request.user.id).order_by("-date_create")
+    page = request.GET.get('page', 1)
+    posts_paginate = Paginator(all_post, 5)
+
+    try:
+        posts = posts_paginate.page(page)
+    except PageNotAnInteger:
+        posts = posts_paginate.page(1)
+    except EmptyPage:
+        posts = posts_paginate.page(paginator.num_pages)
+
+
     if request.method == "POST":
         userForm = UserUpdatedForm(request.POST, instance= request.user)
         profileForm = ProfileUpdatedForm(request.POST, request.FILES, instance=request.user.profile)
@@ -41,15 +53,33 @@ def accountView(request):
     context = {
         "userForm":userForm,
         "profileForm":profileForm,
-        "posts":posts,
+        "posts": posts,
+        "page_obj": posts,
+        "paginator": posts_paginate
     }
-    for post in posts:
-        print(post.author)
     return render(request, "user/account.html", context)
 
+
+@login_required
 def accountAnotherView(request, pk):
     user_ = get_object_or_404(User,id = pk)
-    posts = blog_Models.Post.objects.filter(author_id = user_.id)
-    profile = Profile.objects.get(user = user_)
-    context = {"user_":user_, "profile":profile, "posts":posts}
+    all_post = blog_Models.Post.objects.filter(author_id = user_.id).order_by("-date_create")
+    profile = get_object_or_404(Profile, user = user_)
+
+    page = request.GET.get('page', 1)
+    posts_paginate = Paginator(all_post, 2)
+
+    try:
+        posts = posts_paginate.page(page)
+    except PageNotAnInteger:
+        posts = posts_paginate.page(1)
+    except EmptyPage:
+        posts = posts_paginate.page(paginator.num_pages)
+
+    context = {"user_":user_,
+               "profile":profile,
+               "posts":posts,
+               "page_obj": posts,
+               "paginator": posts_paginate
+               }
     return render(request, "user/account_another.html", context)
