@@ -17,10 +17,15 @@
             </fieldset>
         </form>
         <br>
-        <small class="text-muted">
-         Create New Account
-            <a href="{% url "registration" %}"> Sign Up Right Now</a>
-        </small>
+            <small class="text-muted">
+                Create New Account
+                <a href="{% url "registration" %}"> Sign Up Right Now</a>
+            </small>
+            <br>
+            <small class="text-muted">
+                Forget Password ?
+                <a href="{% url "password_reset" %}"> Reset Password</a>
+            </small>
         </div>
     </div>
 {% endblock %}

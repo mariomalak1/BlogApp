@@ -7,6 +7,12 @@ from blog import models as blog_Models
 from .models import Profile
 from django.contrib.auth import login as loginTheUser
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.auth.views import PasswordResetView
+from django.template.loader import render_to_string
+
+from django.utils.http import urlsafe_base64_encode
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.encoding import force_bytes
 # Create your views here.
 
 def register(request):
@@ -83,3 +89,17 @@ def accountAnotherView(request, pk):
                "paginator": posts_paginate
                }
     return render(request, "user/account_another.html", context)
+
+# class MyPasswordResetView(PasswordResetView):
+#     template_name = "user/password/password_reset.html"
+#     user = {"email":"marioalabd611@gmail.com",
+#             }
+#     context = {"email":user["email"],
+#                'domain':'127.0.0.1:8000',
+#                'site_name': 'Mario Blog',
+#                "uid": urlsafe_base64_encode(force_bytes(user.pk)),
+#                "user": user,
+#                'token': default_token_generator.make_token(user),
+#                'protocol': 'http'}
+#
+#     email_template_name = render_to_string(template_name, context)

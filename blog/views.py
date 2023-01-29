@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from . import models
 from django.contrib.auth.views import login_required
+from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .forms import CreatePostForm
 from django.contrib import messages
@@ -47,19 +48,21 @@ def about(request):
 # class based view that is running now
 
 
-class PostCreateView(LoginRequiredMixin,CreateView):
+class PostCreateView(SuccessMessageMixin, LoginRequiredMixin,CreateView):
 	model = models.Post
 	template_name = "blog/post_create.html"  # "blog/post_create.html"
 	fields = ["title", "content"]
+	success_message = "Post Created Successfully"
 
 	def form_valid(self, form):
 		form.instance.author = self.request.user
 		return super().form_valid(form)
 
-class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin,UpdateView):
+class PostUpdateView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixin,UpdateView):
 	model = models.Post
 	template_name = "blog/post_edit.html"
 	fields = ["title", "content"]
+	success_message = "Post Updated Successfully"
 
 
 
