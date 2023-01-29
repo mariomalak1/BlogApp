@@ -4,7 +4,8 @@ this web app it's just a tutorial to train on Django as a framework in web by Py
 
 to install and open the project:
 
-if you don't have python first install it and add it to path then go to the next
+> if you don't have python first install it and add it to path then go to the next
+>
 
 install all modules in requirements.txt file in the project as:
 
